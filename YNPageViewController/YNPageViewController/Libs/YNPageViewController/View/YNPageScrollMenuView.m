@@ -93,6 +93,9 @@
     itemButton.titleLabel.font = self.configration.selectedItemFont;
     [itemButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
     [itemButton setTitle:title forState:UIControlStateNormal];
+    if(self.attributeTitles.count > 0) {
+        itemButton.titleLabel.attributedText = self.attributeTitles[idx];
+    }
     itemButton.tag = idx;
     
     [itemButton addTarget:self action:@selector(itemButtonOnClick:) forControlEvents:UIControlEventTouchUpInside];

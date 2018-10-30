@@ -186,6 +186,11 @@
 - (void)updateMenuItemTitle:(NSString *)title index:(NSInteger)index;
 
 /**
+ 更新全部菜单栏标题(富文本样式)
+ @param attributeTitles 标题数组（富文本数组）
+ */
+- (void)updateMenuItemAttributeTitles:(NSArray <NSAttributedString *>*)attributeTitles;
+/**
  更新全部菜单栏标题
  @param titles 标题数组
  */

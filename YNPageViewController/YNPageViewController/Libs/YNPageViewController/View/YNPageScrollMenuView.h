@@ -29,6 +29,9 @@
 /// 标题数组
 @property (nonatomic, strong) NSMutableArray *titles;
 
+/// 标题数组（富文本）
+@property (nonatomic, strong) NSMutableArray <NSAttributedString *> *attributeTitles;
+
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;

@@ -23,6 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self updateMenuItemAttributeTitles:[YNSuspendCenterPageVC getAttributeTitles]];
 }
 #pragma mark - Event Response
 
@@ -86,7 +88,19 @@
 }
 
 + (NSArray *)getArrayTitles {
-    return @[@"鞋子", @"衣服", @"帽子"];
+    return @[@"鞋子 ", @"衣服", @"帽子"];
+}
++ (NSMutableArray <NSAttributedString *> *)getAttributeTitles{
+    NSArray *titles = @[@"鞋子  51", @"衣服  05", @"帽子  10"];
+    NSMutableArray * attributeTitles = [NSMutableArray array];
+    [titles enumerateObjectsUsingBlock:^(NSString * title, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:title];
+        [attriStr addAttribute:NSFontAttributeName value: [UIFont fontWithName:@"PingFang-SC-Medium" size:12] range:NSMakeRange(2, title.length - 2)];
+        [attriStr addAttribute:NSStrokeColorAttributeName value:[UIColor redColor] range:NSMakeRange(2, title.length - 2)];
+        [attributeTitles addObject:attriStr];
+    }];
+    return attributeTitles;
 }
 
 #pragma mark - Private Function

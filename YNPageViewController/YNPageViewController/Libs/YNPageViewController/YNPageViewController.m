@@ -440,7 +440,29 @@
     [self.titlesM replaceObjectAtIndex:index withObject:title];
     [self.scrollMenuView reloadView];
 }
-
+- (void)updateMenuItemAttributeTitles:(NSArray<NSAttributedString *> *)attributeTitles{
+    if (attributeTitles.count != self.titlesM.count) return;
+    NSMutableArray *titleArr = [NSMutableArray array];
+    for (int i = 0; i < attributeTitles.count; i++) {
+        NSInteger index = i;
+        NSString *title = [attributeTitles[i] string];
+        [titleArr addObject:title];
+        if (title.length == 0) return;
+        NSString *oldTitle = [self titleWithIndex:index];
+        UIViewController *cacheVC = self.cacheDictM[[self getKeyWithTitle:oldTitle]];
+        if (cacheVC) {
+            NSString *newKey = [self getKeyWithTitle:title];
+            NSString *oldKey = [self getKeyWithTitle:oldTitle];
+            [self.cacheDictM setValue:cacheVC forKey:newKey];
+            if (![newKey isEqualToString:oldKey]) {
+                [self.cacheDictM setValue:nil forKey:oldKey];
+            }
+        }
+    }
+    [self.titlesM replaceObjectsInRange:NSMakeRange(0, attributeTitles.count) withObjectsFromArray:titleArr ];
+    self.scrollMenuView.attributeTitles = (NSMutableArray<NSAttributedString *> *)attributeTitles;
+    [self.scrollMenuView reloadView];
+}
 - (void)updateMenuItemTitles:(NSArray *)titles {
     if (titles.count != self.titlesM.count) return;
     for (int i = 0; i < titles.count; i++) {
