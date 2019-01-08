@@ -50,9 +50,9 @@
     configration.showNavigation = YES;
     configration.scrollMenu = NO;
     configration.aligmentModeCenter = NO;
-    configration.lineWidthEqualFontWidth = true;
-    configration.showBottomLine = YES;
-    
+    configration.lineWidthEqualFontWidth = NO;
+    configration.itemWidth = 10;
+    configration.showBottomLine = NO;
     return [self suspendCenterPageVCWithConfig:configration];
 }
 
@@ -91,7 +91,7 @@
     return @[@"鞋子 ", @"衣服", @"帽子"];
 }
 + (NSMutableArray <NSAttributedString *> *)getAttributeTitles{
-    NSArray *titles = @[@"鞋子  51", @"衣服  05", @"帽子  10"];
+    NSArray *titles = @[@"鞋帽子猫子  51", @"衣分为非服  05", @"帽子  10"];
     NSMutableArray * attributeTitles = [NSMutableArray array];
     [titles enumerateObjectsUsingBlock:^(NSString * title, NSUInteger idx, BOOL * _Nonnull stop) {
         

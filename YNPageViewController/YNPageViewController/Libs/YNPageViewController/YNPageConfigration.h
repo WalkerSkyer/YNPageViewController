@@ -117,6 +117,8 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, assign) CGFloat lineCorner;
 /** 线条左右增加 0  默认线条宽度是等于 item宽度 */
 @property (nonatomic, assign) CGFloat lineLeftAndRightAddWidth;
+/** item宽度 */
+@property (nonatomic, assign) CGFloat itemWidth;
 /** 底部线height 2 */
 @property (nonatomic, assign) CGFloat bottomLineHeight;
 /** 遮盖height 28 */

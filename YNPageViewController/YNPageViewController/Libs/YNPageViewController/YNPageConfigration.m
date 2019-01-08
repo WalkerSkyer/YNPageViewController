@@ -64,6 +64,7 @@
         _lineLeftAndRightAddWidth = 0;
         
         _bottomLineHeight = 2;
+        _itemWidth = 0;
     }
     return self;
 }

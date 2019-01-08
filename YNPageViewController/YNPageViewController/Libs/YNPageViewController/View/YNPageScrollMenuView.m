@@ -207,7 +207,11 @@
     }
     
     if (self.configration.showScrollLine) {
-        self.lineView.frame = CGRectMake(lineX - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin, lineY - self.configration.lineBottomMargin, lineW + self.configration.lineLeftAndRightAddWidth * 2 - 2 * self.configration.lineLeftAndRightMargin, lineH);
+        if (self.configration.itemWidth != 0) {
+          self.lineView.frame = CGRectMake((lineW - self.configration.itemWidth) / 2, lineY - self.configration.lineBottomMargin, self.configration.itemWidth, lineH);
+        } else {
+            self.lineView.frame = CGRectMake(lineX - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin, lineY - self.configration.lineBottomMargin, lineW + self.configration.lineLeftAndRightAddWidth * 2 - 2 * self.configration.lineLeftAndRightMargin, lineH);
+        }
         self.lineView.layer.cornerRadius = self.configration.lineCorner;
         [self.scrollView addSubview:self.lineView];
     }
@@ -237,8 +241,14 @@
     currentButton.titleLabel.font = self.configration.selectedItemFont;
     /// 线条
     if (self.configration.showScrollLine) {
-        self.lineView.yn_x = currentButton.yn_x - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
-        self.lineView.yn_width = currentButton.yn_width + self.configration.lineLeftAndRightAddWidth *2 - self.configration.lineLeftAndRightMargin * 2;
+        if (self.configration.itemWidth != 0) {
+            self.lineView.yn_x = currentButton.center.x - (self.configration.itemWidth / 2);
+            self.lineView.yn_width = self.configration.itemWidth;
+        } else {
+            self.lineView.yn_x = currentButton.yn_x - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
+            self.lineView.yn_width = currentButton.yn_width + self.configration.lineLeftAndRightAddWidth *2 - self.configration.lineLeftAndRightMargin * 2;
+        }
+        
         
         
         if (!self.configration.scrollMenu &&
@@ -290,8 +300,14 @@
         
         /// 线条
         if (self.configration.showScrollLine) {
-            self.lineView.yn_x = currentButton.yn_x - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
-            self.lineView.yn_width = currentButton.yn_width + self.configration.lineLeftAndRightAddWidth * 2 - 2 * self.configration.lineLeftAndRightMargin;
+            if (self.configration.itemWidth != 0) {
+                self.lineView.yn_x = currentButton.center.x - (self.configration.itemWidth / 2);
+                self.lineView.yn_width = self.configration.itemWidth;
+            } else {
+                self.lineView.yn_x = currentButton.yn_x - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
+                self.lineView.yn_width = currentButton.yn_width + self.configration.lineLeftAndRightAddWidth * 2 - 2 * self.configration.lineLeftAndRightMargin;
+                
+            }
             
             if (!self.configration.scrollMenu &&
                 !self.configration.aligmentModeCenter &&
@@ -435,8 +451,14 @@
             self.lineView.yn_width = [self.itemsWidthArraM[lastButton.tag] floatValue] + self.configration.lineLeftAndRightAddWidth *2 + wD *progress;
             
         } else {
-            self.lineView.yn_x = lastButton.yn_x + xD *progress - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
-            self.lineView.yn_width = lastButton.yn_width + wD *progress + self.configration.lineLeftAndRightAddWidth *2 - 2 * self.configration.lineLeftAndRightMargin;
+            if (self.configration.itemWidth != 0) {
+                self.lineView.yn_x = lastButton.yn_x + xD *progress + (lastButton.frame.size.width - self.configration.itemWidth) / 2;
+                self.lineView.yn_width = self.configration.itemWidth;
+            } else {
+                self.lineView.yn_x = lastButton.yn_x + xD *progress - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
+                self.lineView.yn_width = lastButton.yn_width + wD *progress + self.configration.lineLeftAndRightAddWidth *2 - 2 * self.configration.lineLeftAndRightMargin;
+            }
+
         }
     }
     /// 遮盖
