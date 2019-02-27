@@ -97,7 +97,7 @@
         
         NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:title];
         [attriStr addAttribute:NSFontAttributeName value: [UIFont fontWithName:@"PingFang-SC-Medium" size:12] range:NSMakeRange(2, title.length - 2)];
-        [attriStr addAttribute:NSStrokeColorAttributeName value:[UIColor redColor] range:NSMakeRange(2, title.length - 2)];
+        [attriStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2, title.length - 2)];
         [attributeTitles addObject:attriStr];
     }];
     return attributeTitles;

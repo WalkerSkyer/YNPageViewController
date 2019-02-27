@@ -94,7 +94,13 @@
     [itemButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
     [itemButton setTitle:title forState:UIControlStateNormal];
     if(self.attributeTitles.count > 0) {
-        [itemButton setAttributedTitle:self.attributeTitles[idx] forState:UIControlStateNormal];
+        NSMutableAttributedString *att = [self.attributeTitles[idx] mutableCopy];
+        NSLog(@"%@", att);
+        if (att != nil) {
+            [att addAttribute:NSForegroundColorAttributeName value:self.configration.normalItemColor range:NSMakeRange(0, att.length)];
+            [itemButton setAttributedTitle:att forState:UIControlStateNormal];
+        }
+//        [itemButton setAttributedTitle:self.attributeTitles[idx] forState:UIControlStateNormal];
     }
     itemButton.tag = idx;
     
@@ -238,6 +244,12 @@
     /// 颜色
     currentButton.selected = YES;
     [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+    NSMutableAttributedString *att = [currentButton.currentAttributedTitle mutableCopy];
+    NSLog(@"%@", att);
+    if (att != nil) {
+        [att addAttribute:NSForegroundColorAttributeName value:[UIColor yellowColor] range:NSMakeRange(0, att.length)];
+        [currentButton setAttributedTitle:att forState:UIControlStateNormal];
+    }
     currentButton.titleLabel.font = self.configration.selectedItemFont;
     /// 线条
     if (self.configration.showScrollLine) {
@@ -290,10 +302,22 @@
         [self.itemsArrayM enumerateObjectsUsingBlock:^(UIButton  * obj, NSUInteger idx, BOOL * _Nonnull stop) {
             obj.selected = NO;
             [obj setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+            NSMutableAttributedString *att = [obj.currentAttributedTitle mutableCopy];
+            NSLog(@"%@", att);
+            if (att != nil) {
+                [att addAttribute:NSForegroundColorAttributeName value:self.configration.normalItemColor range:NSMakeRange(0, att.length)];
+                [obj setAttributedTitle:att forState:UIControlStateNormal];
+            }
             obj.titleLabel.font = self.configration.itemFont;
             if (idx == self.itemsArrayM.count - 1) {
                currentButton.selected = YES;
                [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+                NSMutableAttributedString *att = [currentButton.currentAttributedTitle mutableCopy];
+                NSLog(@"%@", att);
+                if (att != nil) {
+                    [att addAttribute:NSForegroundColorAttributeName value:self.configration.selectedItemColor range:NSMakeRange(0, att.length)];
+                    [currentButton setAttributedTitle:att forState:UIControlStateNormal];
+                }
                 currentButton.titleLabel.font = self.configration.selectedItemFont;
             }
         }];
@@ -409,23 +433,59 @@
         UIColor *norColor = [UIColor colorWithRed:self.configration.deltaNorR green:self.configration.deltaNorG blue:self.configration.deltaNorB alpha:1];
         UIColor *selColor = [UIColor colorWithRed:self.configration.deltaSelR green:self.configration.deltaSelG blue:self.configration.deltaSelB alpha:1];
         [lastButton setTitleColor:norColor forState:UIControlStateNormal];
+        NSMutableAttributedString *att = [lastButton.currentAttributedTitle mutableCopy];
+        NSLog(@"%@", att);
+        if (att != nil) {
+            [att addAttribute:NSForegroundColorAttributeName value:norColor range:NSMakeRange(0, att.length)];
+            [lastButton setAttributedTitle:att forState:UIControlStateNormal];
+        }
         
         [currentButton setTitleColor:selColor forState:UIControlStateNormal];
+        NSMutableAttributedString *attt = [currentButton.currentAttributedTitle mutableCopy];
+        NSLog(@"%@", attt);
+        if (attt != nil) {
+            [attt addAttribute:NSForegroundColorAttributeName value:selColor range:NSMakeRange(0, attt.length)];
+            [currentButton setAttributedTitle:attt forState:UIControlStateNormal];
+        }
     } else{
         if (progress > 0.5) {
             lastButton.selected = NO;
             currentButton.selected = YES;
             [lastButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+            NSMutableAttributedString *att = [lastButton.currentAttributedTitle mutableCopy];
+            NSLog(@"%@", att);
+            if (att != nil) {
+                [att addAttribute:NSForegroundColorAttributeName value:self.configration.normalItemColor range:NSMakeRange(0, att.length)];
+                [lastButton setAttributedTitle:att forState:UIControlStateNormal];
+            }
             [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+            NSMutableAttributedString *aatt = [currentButton.currentAttributedTitle mutableCopy];
+            NSLog(@"%@", aatt);
+            if (aatt != nil) {
+                [aatt addAttribute:NSForegroundColorAttributeName value:self.configration.selectedItemColor range:NSMakeRange(0, aatt.length)];
+                [currentButton setAttributedTitle:aatt forState:UIControlStateNormal];
+            }
             currentButton.titleLabel.font = self.configration.selectedItemFont;
             
         } else if (progress < 0.5 && progress > 0){
             lastButton.selected = YES;
             [lastButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+            NSMutableAttributedString *att = [lastButton.currentAttributedTitle mutableCopy];
+            NSLog(@"%@", att);
+            if (att != nil) {
+                [att addAttribute:NSForegroundColorAttributeName value:self.configration.selectedItemColor range:NSMakeRange(0, att.length)];
+                [lastButton setAttributedTitle:att forState:UIControlStateNormal];
+            }
             lastButton.titleLabel.font = self.configration.selectedItemFont;
             
             currentButton.selected = NO;
             [currentButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+            NSMutableAttributedString *attt = [currentButton.currentAttributedTitle mutableCopy];
+            NSLog(@"%@", attt);
+            if (attt != nil) {
+                [attt addAttribute:NSForegroundColorAttributeName value:self.configration.normalItemColor range:NSMakeRange(0, attt.length)];
+                [currentButton setAttributedTitle:attt forState:UIControlStateNormal];
+            }
             currentButton.titleLabel.font = self.configration.itemFont;
             
         }
