@@ -94,7 +94,7 @@
     [itemButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
     [itemButton setTitle:title forState:UIControlStateNormal];
     if(self.attributeTitles.count > 0) {
-        itemButton.titleLabel.attributedText = self.attributeTitles[idx];
+        [itemButton setAttributedTitle:self.attributeTitles[idx] forState:UIControlStateNormal];
     }
     itemButton.tag = idx;
     
@@ -102,7 +102,7 @@
     
     [itemButton sizeToFit];
     
-    [self.itemsWidthArraM addObject:@(itemButton.yn_width)];
+    [self.itemsWidthArraM addObject:@(itemButton.yn_width + (self.attributeTitles.count > 0 ? 10 : 0))];
     [self.itemsArrayM addObject:itemButton];
     [self.scrollView addSubview:itemButton];
     
@@ -346,6 +346,17 @@
     if (title.length == 0) return;
     [self reloadView];
 }
+
+/**
+ 更新全部菜单栏标题(富文本样式)
+ @param attributeTitles 标题数组（富文本数组）
+ */
+- (void)updateMenuItemAttributeTitles:(NSArray <NSAttributedString *>*)attributeTitles {
+    self.attributeTitles = [attributeTitles mutableCopy];
+    if (self.attributeTitles.count != self.attributeTitles.count) return;
+    [self reloadView];
+}
+
 
 - (void)updateTitles:(NSArray *)titles {
     if (titles.count != self.titles.count) return;

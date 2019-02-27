@@ -27,8 +27,8 @@
     
     /// style 1
     YNPageConfigration *style_config_1 = [YNPageConfigration defaultConfig];
-    YNPageScrollMenuView *style_1 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"].mutableCopy configration:style_config_1 delegate:nil currentIndex:0];
-    
+    YNPageScrollMenuView *style_1 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS", @"JAVA", @"Object-C", @"JS"].mutableCopy configration:style_config_1 delegate:nil currentIndex:0];
+     [style_1 updateMenuItemAttributeTitles: [self getAttributeTitles]];
     
     /// style 2
     YNPageConfigration *style_config_2 = [YNPageConfigration defaultConfig];
@@ -108,8 +108,19 @@
     [_scrollView addSubview:style_7];
     
     [self.view addSubview:_scrollView];
-    
+   
 }
 
-
+- (NSMutableArray <NSAttributedString *> *)getAttributeTitles{
+    NSArray *titles = @[@"鞋帽子猫子  51", @"衣分为非服  05", @"帽子  10", @"鞋帽子猫子  51", @"衣分为非服  05", @"帽子  10"];
+    NSMutableArray * attributeTitles = [NSMutableArray array];
+    [titles enumerateObjectsUsingBlock:^(NSString * title, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:title];
+        [attriStr addAttribute:NSFontAttributeName value: [UIFont fontWithName:@"PingFang-SC-Medium" size:12] range:NSMakeRange(2, title.length - 2)];
+        [attriStr addAttribute:NSStrokeColorAttributeName value:[UIColor redColor] range:NSMakeRange(2, title.length - 2)];
+        [attributeTitles addObject:attriStr];
+    }];
+    return attributeTitles;
+}
 @end
