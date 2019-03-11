@@ -69,7 +69,7 @@
     
     vc.headerView = autoScrollView;
     /// 指定默认选择index 页面
-    vc.pageIndex = 2;
+    vc.pageIndex = 0;
     
     return vc;
 }
@@ -150,6 +150,11 @@
 
 - (void)pageViewController:(YNPageViewController *)pageViewController didScrollMenuItem:(UIButton *)itemButton index:(NSInteger)index {
     NSLog(@"didScrollMenuItem index %ld", index);
+    UIViewController *vc = pageViewController.controllersM[index];
+    if ([vc isKindOfClass:[BaseTableViewVC class]]) {
+        BaseTableViewVC *tableVc = (BaseTableViewVC *)vc;
+        [tableVc beginRefreshing];
+    }
 }
 
 @end

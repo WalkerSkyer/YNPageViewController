@@ -100,6 +100,11 @@
     }];
 }
 
+/// 调用下拉刷新样式
+- (void)beginRefreshing {
+     [self.tableView.mj_header beginRefreshing];
+}
+
 #pragma mark - 悬浮Center刷新高度方法
 - (void)suspendTopReloadHeaderViewHeight {
     /// 布局高度
@@ -166,7 +171,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"id"];
     if (indexPath.row < self.dataArray.count) {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ section: %zd row:%zd", self.cellTitle ?: @"测试", indexPath.section, indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ %u section: %zd row:%zd", self.cellTitle ?: @"测试", arc4random_uniform(1000), indexPath.section, indexPath.row];
         return cell;
     } else {
         cell.textLabel.text = @"";
