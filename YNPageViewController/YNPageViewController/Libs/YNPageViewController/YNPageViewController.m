@@ -753,7 +753,9 @@
             [self.headerBgView removeFromSuperview];
             [self.scrollMenuView removeFromSuperview];
 #pragma mark 定制实现自己业务-点击tabbar需要当前标签下拉刷新样式刷新
-            scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top, 0, 0, 0);
+            if (self.pageIndex == 0) {
+                scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top, 0, 0, 0);
+            }
             self.headerBgView.yn_y = headerViewY;
             self.scrollMenuView.yn_y = scrollMenuViewY;
             
