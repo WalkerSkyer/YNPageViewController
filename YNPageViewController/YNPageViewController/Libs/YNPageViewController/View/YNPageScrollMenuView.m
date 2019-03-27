@@ -657,6 +657,9 @@
 }
 
 -(CGFloat)caculateTitleWidth:(NSString*)title {
+    if (title == nil) {
+        title = @"    ";
+    }
     NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:title];
     NSRange range = NSMakeRange(0, attrStr.length);
     NSDictionary *dic = [attrStr attributesAtIndex:0 effectiveRange:&range];
