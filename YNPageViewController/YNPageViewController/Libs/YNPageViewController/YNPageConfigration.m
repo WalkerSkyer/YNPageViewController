@@ -64,6 +64,8 @@
         
         _bottomLineHeight = 2;
         _itemWidth = 0;
+        _indicateOffset = CGPointZero;
+        _indicateColor = [UIColor redColor];
     }
     return self;
 }

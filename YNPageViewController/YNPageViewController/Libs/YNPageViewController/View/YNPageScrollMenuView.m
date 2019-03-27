@@ -35,6 +35,8 @@
 @property (nonatomic, assign) NSInteger currentIndex;
 /// items
 @property (nonatomic, strong) NSMutableArray<UIButton *> *itemsArrayM;
+/// 指示点
+@property (nonatomic, strong) NSMutableArray<UIView *> *indicatesArrayM;
 /// item宽度
 @property (nonatomic, strong) NSMutableArray *itemsWidthArraM;
 
@@ -59,6 +61,7 @@
     menuView.currentIndex = currentIndex;
     menuView.itemsArrayM = @[].mutableCopy;
     menuView.itemsWidthArraM = @[].mutableCopy;
+    menuView.indicatesArrayM = @[].mutableCopy;
     
     [menuView setupSubViews];
     return menuView;
@@ -103,6 +106,13 @@
     [self.itemsWidthArraM addObject:@(itemButton.yn_width + (self.attributeTitles.count > 0 ? 10 : 0))];
     [self.itemsArrayM addObject:itemButton];
     [self.scrollView addSubview:itemButton];
+    
+    UIView *redView = [UIView new];
+    redView.backgroundColor = [UIColor redColor];
+    redView.hidden = YES;
+    [self.scrollView addSubview:redView];
+    [self.indicatesArrayM addObject:redView];
+    redView.backgroundColor = _configration.indicateColor;
 }
 
 - (void)setupOtherViews {
@@ -126,6 +136,9 @@
             itemX += self.configration.itemMargin + [self.itemsWidthArraM[idx - 1] floatValue];
         }
         button.frame = CGRectMake(itemX, itemY, [self.itemsWidthArraM[idx] floatValue], itemH);
+        UIView *redView = self.indicatesArrayM[idx];
+        CGFloat strWidth = [self caculateTitleWidth:button.titleLabel.attributedText.string];
+        redView.frame = CGRectMake(button.frame.origin.x + button.frame.size.width / 2 + strWidth / 2 + _configration.indicateOffset.x, 3 + _configration.indicateOffset.y, 6, 6);
     }];
     
     CGFloat scrollSizeWidht = self.configration.itemLeftAndRightMargin + CGRectGetMaxX([[self.itemsArrayM lastObject] frame]);
@@ -149,6 +162,9 @@
                     itemX += self.configration.itemMargin + [self.itemsWidthArraM[idx - 1] floatValue];
                 }
                 button.frame = CGRectMake(itemX, itemY, [self.itemsWidthArraM[idx] floatValue], itemH);
+                UIView *redView = self.indicatesArrayM[idx];
+                CGFloat strWidth = [self caculateTitleWidth:button.titleLabel.attributedText.string];
+                redView.frame = CGRectMake(button.frame.origin.x + button.frame.size.width / 2 + strWidth / 2 + _configration.indicateOffset.x, 3 + _configration.indicateOffset.y, 6, 6);
             }];
             
             self.scrollView.contentSize = CGSizeMake(left + CGRectGetMaxX([[self.itemsArrayM lastObject] frame]), self.scrollView.yn_height);
@@ -160,6 +176,9 @@
                     itemW = self.scrollView.yn_width / self.itemsArrayM.count;
                     itemX = itemW *idx;
                     button.frame = CGRectMake(itemX, itemY, itemW, itemH);
+                    UIView *redView = self.indicatesArrayM[idx];
+                    CGFloat strWidth = [self caculateTitleWidth:button.titleLabel.attributedText.string];
+                    redView.frame = CGRectMake(button.frame.origin.x + button.frame.size.width / 2 + strWidth / 2 + _configration.indicateOffset.y, 3 + _configration.indicateOffset.x, 6, 6);
                 }];
                 
                 self.scrollView.contentSize = CGSizeMake(CGRectGetMaxX([[self.itemsArrayM lastObject] frame]), self.scrollView.yn_height);
@@ -590,6 +609,7 @@
 
     [self.itemsArrayM removeAllObjects];
     [self.itemsWidthArraM removeAllObjects];
+    [self.indicatesArrayM removeAllObjects];
     [self setupSubViews];
 }
 
@@ -598,6 +618,50 @@
     if(self.delegate && [self.delegate respondsToSelector:@selector(pagescrollMenuViewAddButtonAction:)]){
         [self.delegate pagescrollMenuViewAddButtonAction:button];
     }
+}
+
+-(void)showIndicateView:(NSArray<NSNumber *>*)indexArr animation:(BOOL)animation; {
+    for (NSNumber *number in indexArr) {
+        UIView *redView = self.indicatesArrayM[number.intValue];
+        redView.layer.cornerRadius = 3;
+        [self.scrollView bringSubviewToFront:redView];
+        if (animation) {
+            redView.alpha = 0;
+            [UIView animateWithDuration:0.3 animations:^{
+                redView.alpha = 1;
+            } completion:^(BOOL finished) {
+                redView.hidden = NO;
+            }];
+        } else {
+            redView.hidden = NO;
+        }
+    }
+}
+
+-(void)hiddenIndicateView:(NSArray<NSNumber *> *)indexArr animation:(BOOL)animation {
+    for (NSNumber *number in indexArr) {
+        UIView *redView = self.indicatesArrayM[number.intValue];
+        if (redView.hidden) {return;}
+        [self.scrollView bringSubviewToFront:redView];
+        if (animation) {
+            redView.alpha = 1;
+            [UIView animateWithDuration:0.3 animations:^{
+                redView.alpha = 0;
+            } completion:^(BOOL finished) {
+                redView.hidden = YES;
+            }];
+        } else {
+            redView.hidden = YES;
+        }
+    }
+}
+
+-(CGFloat)caculateTitleWidth:(NSString*)title {
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:title];
+    NSRange range = NSMakeRange(0, attrStr.length);
+    NSDictionary *dic = [attrStr attributesAtIndex:0 effectiveRange:&range];
+    CGSize titleSize = [title boundingRectWithSize:CGSizeMake(UIScreen.mainScreen.bounds.size.width, 44) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:dic context:nil].size;
+    return titleSize.width;
 }
 
 @end

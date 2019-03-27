@@ -79,4 +79,10 @@
 /// 刷新视图
 - (void)reloadView;
 
+/// 刷新小红点
+- (void)showIndicateView:(NSArray<NSNumber *>*)indexArr animation:(BOOL)animation;
+
+/// 刷新小红点
+- (void)hiddenIndicateView:(NSArray<NSNumber *>*)indexArr animation:(BOOL)animation;
+
 @end

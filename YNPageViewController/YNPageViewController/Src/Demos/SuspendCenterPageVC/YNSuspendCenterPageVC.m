@@ -25,6 +25,7 @@
     [super viewDidLoad];
     
     [self updateMenuItemAttributeTitles:[YNSuspendCenterPageVC getAttributeTitles]];
+    [self.scrollMenuView showIndicateView:@[@1] animation:YES];
 }
 
 #pragma mark - Public Function
@@ -41,6 +42,8 @@
     configration.lineWidthEqualFontWidth = NO;
     configration.itemWidth = 10;
     configration.showBottomLine = NO;
+    configration.indicateColor = [UIColor purpleColor];
+    configration.indicateOffset = CGPointMake(3, 6);
     return [self suspendCenterPageVCWithConfig:configration];
 }
 

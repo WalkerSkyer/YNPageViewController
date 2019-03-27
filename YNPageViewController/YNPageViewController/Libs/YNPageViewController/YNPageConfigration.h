@@ -144,6 +144,12 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 /** 内容区域 */
 @property (nonatomic, assign) CGFloat contentHeight;
 
+/** 指示红点的偏移量，默认右上角 */
+@property (nonatomic, assign) CGPoint indicateOffset;
+/** 指示红点颜色 */
+@property (nonatomic, assign) UIColor *indicateColor;
+
+
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 
 + (instancetype)init UNAVAILABLE_ATTRIBUTE;
